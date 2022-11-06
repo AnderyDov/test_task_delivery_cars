@@ -4,19 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../src/index.css">
+    <link rel="stylesheet" href="../src/index.css" />
     <link rel="icon" href="./favicon.ico" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@210;400&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@210;400&display=swap"
+      rel="stylesheet"
+    />
     <title>MENU DELIVERY CAR</title>
   </head>
+
   <body>
-    <div class='square'>
+    <div class="square">
       <div class="square_min top-left"></div>
       <div class="square_min top-right"></div>
       <div class="square_min bottom-right"></div>
       <div class="square_min bottom-left"></div>
-      <div class="circle" >Нажать</div>
+      <div class="circle">Нажать</div>
     </div>
-    <form class='form'></form>
-   <script src='../src/index.js' type='module'></script>
+    <form class="form hide">
+      <div class="icons"></div>
+      <label class="form_label"> Марка автомобиля </label>
+      <select class="form_select" name="" id="">
+        <option value="">23</option>
+        <option value="">23</option>
+        <option value="">23</option>
+        <option value="">23</option>
+      </select>
+      <label class="form_label"> Mодель </label>
+      <select class="form_select" name="" id=""></select>
+      <label class="form_label"> Год выпуска </label>
+      <select class="form_select" name="" id=""></select>
+      <label class="form_label">Дата доставки</label>
+      <select class="form_select" name="" id=""></select>
+      <button class="delivbut">доставить</button>
+      <div class="calendar"></div>
+    </form>
+    <script src="../src/index.js" type="module"></script>
+  </body>
 </html>
