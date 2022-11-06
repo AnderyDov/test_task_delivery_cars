@@ -60,7 +60,7 @@ const data = [
     delivery: '23.05.2022-27.06.2022'
   },
   {
-    mark: 'toyaota',
+    mark: 'toyota',
     model: 'camry',
     year: 2019,
     delivery: '23.05.2022-27.06.2022'
@@ -78,7 +78,7 @@ const data = [
     delivery: '23.05.2022-27.06.2022'
   },
   {
-    mark: 'toyaota',
+    mark: 'toyota',
     model: 'supra',
     year: 2019,
     delivery: '23.05.2022-27.06.2022'
