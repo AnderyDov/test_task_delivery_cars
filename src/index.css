@@ -23,6 +23,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+/* Четвердь вкадрата  */
 .square_min {
   width: 125px;
   height: 125px;
@@ -32,6 +33,7 @@ body {
   background-size: 250px;
   z-index: 30;
 }
+/* Стилизация четветинок  */
 .top-left {
   top: 0;
   left: 0;
@@ -63,6 +65,7 @@ body {
   height: 150px;
   background: rgb(15, 15, 15);
   border-radius: 50%;
+  border: none;
   display: flex;
   visibility: hidden;
   align-items: center;
@@ -72,29 +75,40 @@ body {
   transform: rotate(180deg);
   opacity: 0;
 }
+/* Класс добавляемый для веалтзации появления и поворота */
 .rotate {
   transition: opacity 0.4s, rotate 2s;
   rotate: -180deg;
   opacity: 1;
 }
-.active {
+/* Класс для эввекта нажатия на кнопку circle */
+.circle:active {
+  transform: scale(0.95) rotate(-180deg);
+}
+/* Класс добавляется по завершении поворота */
+.work-button {
   cursor: pointer;
 }
-.active:hover {
+/* Ховер эффект при наведении */
+.work-button:hover {
   color: darkgrey;
-
   outline: 2px solid darkgrey;
 }
+/* Класс для скрыти элемента */
 .hide {
   display: none;
 }
+/* Класс добавляет свойство дисплей */
 .flex {
   display: flex;
 }
-
+/* Класс отключает пользовательские событя на элементе */
+.disabled {
+  pointer-events: none;
+}
 /* Форма для выбора автомобиля */
 .form {
-  border: 1px solid black;
+  box-shadow: 4px 4px 4px 4px grey;
   border-radius: 5px;
   width: 230px;
   height: 400px;
@@ -103,23 +117,74 @@ body {
   padding: 1rem;
   overflow: hidden;
 }
+/* Блок эмблем автомобилей */
 .icons {
   width: 100%;
   height: 50px;
   background: grey;
   margin-bottom: 10px;
 }
+/* Подписи для раскрывающихся списков текста */
 .form_label {
   align-self: flex-start;
   font-size: 0.8rem;
 }
+/* Раскрывающийся список */
 .form_select {
-  min-width: 100%;
+  width: 100%;
   margin-bottom: 10px;
+  cursor: pointer;
+  /* -webkit-user-select: none;
+  user-select: none;
+  -webkit-appearance: none; */
+  /* appearance: none; */
+  background: #f3f3f2;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 1px 1px 1px 1px grey;
+  height: 2rem;
+  padding-left: 1rem;
+  padding-right: 2.5rem;
+  font-size: 0.8rem;
+  line-height: 1.25rem;
+  line-height: 2;
+  border-width: 1px;
+  font-weight: 600;
 }
+/* Эффект при наведении на раскрывающийся список */
+.form_select:hover {
+  background: black;
+  color: white;
+}
+/* Кнопка для подтверждения заказа */
 .delivbut {
   margin-bottom: 10px;
+  cursor: pointer;
+  outline: 1px solid black;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  line-height: 1em;
+  min-height: 3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: 0.1s all;
 }
+/* эффект наведения на кнопку подтверждения */
+.delivbut:hover {
+  background: black;
+  color: white;
+}
+/* Эффект нажатия на кнопку подтверждения */
+.delivbut:active {
+  transform: scale(0.95);
+}
+/* Блок для показа календаря */
 .calendar {
   width: 100%;
   height: 20px;
