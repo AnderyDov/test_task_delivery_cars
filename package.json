@@ -1,0 +1,9 @@
+{
+  "name": "test_task_delivery_cars",
+  "version": "1.0.0",
+  "description": "test task menu delivery cars",
+  "main": "index.js",
+  "author": "Andrey <dovban.andreyy@rambler.ru>",
+  "license": "MIT",
+  "private": true
+}
