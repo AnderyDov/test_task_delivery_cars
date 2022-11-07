@@ -37,25 +37,25 @@ body {
 .top-left {
   top: 0;
   left: 0;
-  background: url('./car.png');
+  background: url('./image/car.png');
   background-position: left top;
 }
 .top-right {
   top: 0;
   right: 0;
-  background: url('./car.png');
+  background: url('./image/car.png');
   background-position: right top;
 }
 .bottom-right {
   bottom: 0;
   right: 0;
-  background: url('./car.png');
+  background: url('./image/car.png');
   background-position: right bottom;
 }
 .bottom-left {
   bottom: 0;
   left: 0;
-  background: url('./car.png');
+  background: url('./image/car.png');
   background-position: left bottom;
 }
 
@@ -116,14 +116,15 @@ body {
   align-items: center;
   padding: 1rem;
   overflow: hidden;
+  position: relative;
 }
 /* Блок эмблем автомобилей */
-.icons {
+/* .icons {
   width: 100%;
   height: 50px;
   background: grey;
   margin-bottom: 10px;
-}
+} */
 /* Подписи для раскрывающихся списков текста */
 .form_label {
   align-self: flex-start;
@@ -134,10 +135,6 @@ body {
   width: 100%;
   margin-bottom: 10px;
   cursor: pointer;
-  /* -webkit-user-select: none;
-  user-select: none;
-  -webkit-appearance: none; */
-  /* appearance: none; */
   background: #f3f3f2;
   border-radius: 5px;
   border: none;
@@ -158,7 +155,9 @@ body {
 }
 /* Кнопка для подтверждения заказа */
 .delivbut {
-  margin-bottom: 10px;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
   cursor: pointer;
   outline: 1px solid black;
   border: none;
@@ -187,6 +186,88 @@ body {
 /* Блок для показа календаря */
 .calendar {
   width: 100%;
-  height: 20px;
-  background: grey;
+}
+/* Блок для показа диапазона допустимых дат */
+.calendar div {
+  margin-bottom: 10px;
+}
+/* Поле ввода даты */
+#datepicker {
+  height: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  line-height: 2;
+  line-height: 1.5rem;
+  border-width: 1px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  width: 60%;
+  box-shadow: 1px 1px 1px 1px grey;
+}
+/* Стили для иконки календаря */
+.ui-datepicker-trigger {
+  margin-left: 25px;
+  position: relative;
+  top: 3px;
+  cursor: pointer;
+}
+.ui-datepicker-trigger:hover {
+  transition: all 0.3s ease;
+  transform: scale(2);
+}
+/* Блок показа парметров выбранного автомобиля и даты доставки */
+.showcar {
+  box-shadow: 4px 4px 4px 4px grey;
+  border-radius: 5px;
+  width: 230px;
+  height: 400px;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+.showcar label {
+  align-self: flex-start;
+  font-size: 0.8rem;
+}
+.showcar div {
+  text-align: end;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 2rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  border-bottom: 1px solid #000;
+}
+.newround {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  outline: 1px solid black;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  line-height: 1em;
+  min-height: 3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: 0.1s all;
+}
+/* эффект наведения на кнопку подтверждения */
+.newround:hover {
+  background: black;
+  color: white;
+}
+/* Эффект нажатия на кнопку подтверждения */
+.newround:active {
+  transform: scale(0.95);
 }

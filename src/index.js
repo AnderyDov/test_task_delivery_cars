@@ -2,8 +2,17 @@
 // Имитация запроса и присвоение полученных даннах в переменную
 import data from './data.js';
 
+//===============================================================================
+
 let markList = [...data].map((el) => el.mark);
 markList = new Set(markList);
+
+// Выбранная машина
+let car = {};
+// Переменные для задания допуспимого дмапазона дат доставки
+let minDate = '';
+let maxDate = '';
+let now = new Date().getTime();
 
 // Начальный квадрат с его четверринками
 const square = document.querySelector('.square');
@@ -14,16 +23,34 @@ const square_bl = document.querySelector('.bottom-left');
 
 // Круглая кнопка для входа в меню
 const circle = document.querySelector('.circle');
+
 // Форма
 const form = document.querySelector('.form');
+const delivbut = document.querySelector('.delivbut');
+
 // Раскрывающиеся списки
 const mark = document.querySelector('.mark');
 const model = document.querySelector('.model');
 const year = document.querySelector('.year');
 
+// Кадегдарь для выбора даты доставки
+const calendar = document.querySelector('.calendar');
+const rangeDates = document.querySelector('.range_dates');
+const datepicker = document.querySelector('#datepicker');
+
+// Блок показа парметров выбранного автомобиля и даты доставки
+const showcar = document.querySelector('.showcar');
+const showmark = document.querySelector('.showmark');
+const showmodel = document.querySelector('.showmodel');
+const showyear = document.querySelector('.showyear');
+const showdelivery = document.querySelector('.showdelivery');
+const newround = document.querySelector('.newround');
+
 // Ширина и высота области проасмотра
 const wd = window.innerWidth;
 const hd = window.innerHeight;
+
+//===============================================================================
 
 // Установка начальных значений в выпадающих списках
 mark.value = '1';
@@ -41,11 +68,32 @@ window.onload = onLoad;
 render();
 mark.onchange = render;
 model.onchange = render2;
+year.onchange = render3;
 
-//
-form.onsubmit = (e) => {
+// Подтверждение выбора автомобиля
+form.onsubmit = (e) => onSubmit(e);
+
+// Перзапуск
+newround.onclick = restart;
+
+//===============================================================================
+
+// Функция подтверждения выбора автомобмля
+function onSubmit(e) {
   e.preventDefault();
-};
+  if (mark.value !== '1' && model.value !== '1' && year.value !== '1') {
+    car.delivery = datepicker.value;
+    showcar.classList.remove('hide');
+    form.classList.add('hide');
+    form.classList.remove('flex');
+
+    showmark.innerHTML = car.mark;
+    showmodel.innerHTML = car.model;
+    showyear.innerHTML = car.year;
+    showdelivery.innerHTML = car.delivery;
+  }
+  console.log(car);
+}
 
 // Функция onLoad производит манипуляции с елементами на странице
 function onLoad() {
@@ -92,7 +140,18 @@ function createOption(inner = 'Выберите модель', value = '1') {
 
 // Функци выбора марки автомобиля, сбрасывает зачения модели и года выпуска к стартовым условиям, перезагрузки страинци сбрачывает так же марку автомоблиля к начальному состоянию
 function render() {
-  console.log(mark.value);
+  // Сброс минимальныного и максимального значения с календаря jQuery
+  $('#datepicker').datepicker({
+    minDate: null,
+    maxDate: null
+  });
+  // Скрыть блок календаря
+  calendar.classList.add('hide');
+  // Очистка объекта car
+  car = {};
+  delivbut.classList.add('disabled');
+
+  // Отрисовка елементов раскрывающегося списка
   let arr = [];
   model.innerHTML = '';
   year.innerHTML = '';
@@ -104,20 +163,100 @@ function render() {
       arr.push(el.model);
     }
   });
-  console.log(arr);
 }
 
 // Функци выбора модели автомобиля, сбрасывает зачения года выпуска к стартовым условиям
 function render2() {
-  console.log(model.value);
+  // Сброс минимальныного и максимального значения с календаря jQuery
+  $('#datepicker').datepicker({
+    minDate: null,
+    maxDate: null
+  });
+  // Отрисовка елементов раскрывающегося списка
+  calendar.classList.add('hide');
+  // Очистка объекта car
+  car = {};
+  delivbut.classList.add('disabled');
+
+  // Отрисовка елементов раскрывающегося списка
   let arr = [];
   year.innerHTML = '';
   year.append(createOption(`Выберите год выпуска`));
   data.forEach((el) => {
     if (model.value === el.model && !arr.includes(el.year)) {
-      year.append(createOption(el.year, el.model));
+      year.append(createOption(el.year, el.year));
       arr.push(el.year);
     }
   });
-  console.log(arr);
+}
+
+// Функция выбора года выпуска автомобиля, при из менени года с начального состояния открывается календарь, для выбора даты доставки
+function render3() {
+  if (year.value !== '1') {
+    calendar.classList.remove('hide');
+    data.forEach((el) => {
+      if (
+        el.mark === mark.value &&
+        el.model === model.value &&
+        el.year === +year.value
+      ) {
+        car = el;
+        delivbut.classList.remove('disabled');
+      }
+    });
+
+    // Показ пользователю допустимого дтапазона значений
+    rangeDates.innerHTML = car.delivery;
+
+    // Получение разници дней между текущуё датой и концами диапазона значений
+    datepicker.value = car.delivery.split('-')[0];
+    minDate = car.delivery.split('-')[0];
+    minDate = minDate.split('.');
+    minDate = new Date(+minDate[2], +minDate[1] - 1, +minDate[0]).getTime();
+    minDate = Math.round((minDate - now) / 1000 / 60 / 60 / 24);
+    maxDate = car.delivery.split('-')[1];
+    maxDate = maxDate.split('.');
+    maxDate = new Date(+maxDate[2], +maxDate[1] - 1, +maxDate[0]).getTime();
+    maxDate = Math.round((maxDate - now) / 1000 / 60 / 60 / 24);
+
+    // Устанка параметров календаря j~ery
+    $('#datepicker').datepicker('option', {
+      showOn: 'button',
+      buttonImage: '../src/image/calendar-date-fill.svg',
+      buttonImageOnly: true,
+      buttonText: 'Выбрать дату',
+      minDate: `+${minDate}D`,
+      maxDate: `+${maxDate}D`
+    });
+  }
+  console.log(car);
+}
+
+// Функция запуска нового круга и очистки всех данных
+function restart() {
+  showcar.classList.add('hide');
+  showmark.innerHTML = '';
+  showmodel.innerHTML = '';
+  showyear.innerHTML = '';
+  showdelivery.innerHTML = '';
+
+  form.classList.remove('flex');
+  form.classList.add('hide');
+  mark.value = '1';
+  model.value = '1';
+  year.value = '1';
+
+  calendar.classList.add('hide');
+  rangeDates.value = '';
+  delivbut.classList.add('disabled');
+
+  car = {};
+  maxDate = '';
+  minDate = '';
+
+  // Сброс минимальныного и максимального значения с календаря jQuery
+  $('#datepicker').datepicker({
+    minDate: null,
+    maxDate: null
+  });
 }
