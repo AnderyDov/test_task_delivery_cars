@@ -67,13 +67,15 @@ body {
   border-radius: 50%;
   border: none;
   display: flex;
-  visibility: hidden;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 2rem;
   transform: rotate(180deg);
   opacity: 0;
+}
+.unvisibility {
+  visibility: hidden;
 }
 /* Класс добавляемый для веалтзации появления и поворота */
 .rotate {

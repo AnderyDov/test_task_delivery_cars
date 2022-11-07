@@ -10,8 +10,8 @@ markList = new Set(markList);
 // Выбранная машина
 let car = {};
 // Переменные для задания допуспимого дмапазона дат доставки
-let minDate = '';
-let maxDate = '';
+var minDate = '';
+var maxDate = '';
 let now = new Date().getTime();
 
 // Начальный квадрат с его четверринками
@@ -82,17 +82,36 @@ newround.onclick = restart;
 function onSubmit(e) {
   e.preventDefault();
   if (mark.value !== '1' && model.value !== '1' && year.value !== '1') {
-    car.delivery = datepicker.value;
-    showcar.classList.remove('hide');
-    form.classList.add('hide');
-    form.classList.remove('flex');
+    if (validateDate(datepicker.value)) {
+      car.delivery = datepicker.value;
+      showcar.classList.remove('hide');
+      form.classList.add('hide');
+      form.classList.remove('flex');
 
-    showmark.innerHTML = car.mark;
-    showmodel.innerHTML = car.model;
-    showyear.innerHTML = car.year;
-    showdelivery.innerHTML = car.delivery;
+      showmark.innerHTML = car.mark;
+      showmodel.innerHTML = car.model;
+      showyear.innerHTML = car.year;
+      showdelivery.innerHTML = car.delivery;
+    } else {
+      alert('Некорретный формат даты, или вы вышли ща пределы диапазона');
+    }
   }
-  console.log(car);
+}
+// Функция валидации даты
+function validateDate(str) {
+  if (/^\d\d\.\d\d\.\d\d\d\d$/g.test(str)) {
+    str = str.split('.');
+    let targetDate = new Date(+str[2], +str[1] - 1, +str[0]).getTime();
+    let min = car.delivery.split('-')[0];
+    min = min.split('.');
+    min = new Date(+min[2], +min[1] - 1, +min[0]).getTime();
+    let max = car.delivery.split('-')[1];
+    max = max.split('.');
+    max = new Date(+max[2], +max[1] - 1, +max[0]).getTime();
+    if (targetDate >= min && targetDate <= max) {
+      return true;
+    }
+  }
 }
 
 // Функция onLoad производит манипуляции с елементами на странице
@@ -107,7 +126,7 @@ function onLoad() {
 
   // Появляется круглая кнопка
   setTimeout(() => {
-    circle.style.visibility = 'visible';
+    circle.classList.remove('unvisibility');
     circle.classList.add('rotate');
   }, 2500);
 
@@ -200,7 +219,7 @@ function render3() {
         el.model === model.value &&
         el.year === +year.value
       ) {
-        car = el;
+        car = { ...el };
         delivbut.classList.remove('disabled');
       }
     });
@@ -229,7 +248,6 @@ function render3() {
       maxDate: `+${maxDate}D`
     });
   }
-  console.log(car);
 }
 
 // Функция запуска нового круга и очистки всех данных
@@ -259,4 +277,13 @@ function restart() {
     minDate: null,
     maxDate: null
   });
+
+  circle.classList.add('disabled', 'unvisibility');
+  circle.classList.remove('rotate', 'work-button');
+  square.classList.remove('hide');
+  square_tl.style.transform = `translate(0px, 0px)`;
+  square_tr.style.transform = `translate(0px, 0px)`;
+  square_br.style.transform = `translate(0px, 0px)`;
+  square_bl.style.transform = `translate(0px, 0px)`;
+  onLoad();
 }
